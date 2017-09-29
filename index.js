@@ -99,6 +99,7 @@ function toggleEditItem(itemIndex) {
   STORE[itemIndex].editable = !STORE[itemIndex].editable;
 }
 
+
 // User can edit an item title
 function handleEditItemClicked(){
   //  > Listen for user click on button
@@ -129,6 +130,7 @@ function handleShoppingList() {
   handleNewItemSubmit();
   handleItemCheckClicked();
   handleDeleteItemClicked();
+  handleEditItemClicked();
 }
   
 $(handleShoppingList);

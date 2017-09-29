@@ -1,10 +1,10 @@
 'use strict';
 /* global $ */
 
-const STORE = [{name: 'apples', checked: false, editable: false},
-  {name: 'oranges', checked: false, editable: false},
-  {name: 'milk', checked: true, editable: false},
-  {name: 'bread', checked: false, editable: false}];
+const STORE = [{name: 'apples', checked: false, editable: true},
+  {name: 'oranges', checked: false, editable: true},
+  {name: 'milk', checked: true, editable: true},
+  {name: 'bread', checked: false, editable: true}];
 
 function generateItemElement(item, itemIndex, template) {
   return `
@@ -14,14 +14,16 @@ function generateItemElement(item, itemIndex, template) {
           <button class="shopping-item-toggle js-item-toggle">
               <span class="button-label">check</span>
           </button>
-          <button class="shopping-item-edit js-item-edit">edit</button>
+          <button class="shopping-hidden-toggle js-hidden-toggle">Toggle</button>
           <button class="shopping-item-delete js-item-delete">
               <span class="button-label">delete</span>
           </button>
         </div>
       </li>`;
 }
-  
+ 
+//<button class="shopping-item-edit js-item-edit">edit</button>
+
   
 function generateShoppingItemsString(shoppingList) {
   console.log('Generating shopping list element');
@@ -93,25 +95,30 @@ function handleDeleteItemClicked() {
   console.log('`handleDeleteItemClicked` ran');
 }
 
-  
+// function toggleEditItem(itemIndex) {
+//   STORE[itemIndex].editable = !STORE[itemIndex].editable;
+//   if(STORE[itemIndex].editable === true){
+//     $(this).find('.js-item-edit')
+//       .html('<button class="shopping-item-save js-item-save">save</button>');//button to edit >> save
+//   } 
+//   if(STORE[itemIndex].editable === false){
+//     $(this).find('.js-item-save')//button to save >> edit 
+//       .html('<button class="shopping-item-edit js-item-edit">eit</button>');//button to edit >> save
+//   }
+// }
 
-function toggleEditItem(itemIndex) {
-  STORE[itemIndex].editable = !STORE[itemIndex].editable;
-}
-
+//when editable is TRUE; button = save)
+//listen to click of save > user's new input > replace it to STORE w/ respective itemIndex
 
 // User can edit an item title
-function handleEditItemClicked(){
-  //  > Listen for user click on button
-  $('.js-shopping-list').on('click', '.js-item-edit', (event) => {
-    const itemIndex = getItemIndexFromElement(event.currentTarget);
-    toggleEditItem(itemIndex);
-    renderShoppingList();
-  });
-}
-//  > Container becomes editable
-//  > Submit new Text > Submit
-//  > Render List
+// function handleEditItemClicked(){
+//   //  > Listen for user click on button
+//   $('.js-shopping-list').on('click', '.js-item-edit', (event) => {
+//     const itemIndex = getItemIndexFromElement(event.currentTarget);
+//     toggleEditItem(itemIndex);
+//     renderShoppingList();
+//   });
+// }
 
 // User can press a toggle switch to show all items or show only items that are unchecked
 // > User click on "Toggle Button"
@@ -119,18 +126,17 @@ function handleEditItemClicked(){
 // > Render List
 
 // User can type in a search term and get a filtered item list by title
-//  > User types in existing field and clicks "Filter Search"
-//  > STORE filters
+//  > Create a new field on top for filter search
+//  > Another button to submit filter
+//  > .filter(?) between user input & current <li>
 //  > Render List
-
-
 
 function handleShoppingList() {
   renderShoppingList();
   handleNewItemSubmit();
   handleItemCheckClicked();
   handleDeleteItemClicked();
-  handleEditItemClicked();
+//   handleEditItemClicked();
 }
   
 $(handleShoppingList);

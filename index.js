@@ -1,21 +1,20 @@
 'use strict';
 /* global $ */
 
-const STORE = [
-  {name: 'apples', checked: false},
-  {name: 'oranges', checked: false},
-  {name: 'milk', checked: true},
-  {name: 'bread', checked: false}
-];
-  
+const STORE = [{name: 'apples', checked: false, editable: false},
+  {name: 'oranges', checked: false, editable: false},
+  {name: 'milk', checked: true, editable: false},
+  {name: 'bread', checked: false, editable: false}];
+
 function generateItemElement(item, itemIndex, template) {
   return `
       <li class="js-item-index-element" data-item-index="${itemIndex}">
-        <span class="shopping-item js-shopping-item ${item.checked ? 'shopping-item__checked' : ''}">${item.name}</span>
+        <span class="shopping-item js-shopping-item ${item.checked ? 'shopping-item__checked' : ''}" contenteditable="${item.editable}">${item.name}</span>
         <div class="shopping-item-controls">
           <button class="shopping-item-toggle js-item-toggle">
               <span class="button-label">check</span>
           </button>
+          <button class="shopping-item-edit js-item-edit">edit</button>
           <button class="shopping-item-delete js-item-delete">
               <span class="button-label">delete</span>
           </button>
@@ -50,8 +49,8 @@ function addItemToShoppingList(itemName) {
 function handleNewItemSubmit() {
   $('#js-shopping-list-form').submit(function(event) {
     event.preventDefault();
-    console.log('`handleNewItemSubmit` ran');
     const newItemName = $('.js-shopping-list-entry').val();
+    console.log(newItemName);
     $('.js-shopping-list-entry').val('');
     addItemToShoppingList(newItemName);
     renderShoppingList();
@@ -79,24 +78,52 @@ function handleItemCheckClicked() {
   });
 }
 
-function deleteItemFromList(list) {
-    if()
-    //function > access STORE > match the index >> splicing
+function deleteItemFromList(itemIndex) {
+  const itemToDelete = STORE.splice(itemIndex,1);
 }
-
   
 function handleDeleteItemClicked() {
   // Listen for when users want to delete an item and 
   // delete it
   $('.js-shopping-list').on('click', '.js-item-delete', (event) => {
     const itemIndex = getItemIndexFromElement(event.currentTarget);
-    //function > access STORE > match the index >>
-    //splicing
+    deleteItemFromList(itemIndex);
+    renderShoppingList();
   });
   console.log('`handleDeleteItemClicked` ran');
 }
 
   
+
+function toggleEditItem(itemIndex) {
+  STORE[itemIndex].editable = !STORE[itemIndex].editable;
+}
+
+// User can edit an item title
+function handleEditItemClicked(){
+  //  > Listen for user click on button
+  $('.js-shopping-list').on('click', '.js-item-edit', (event) => {
+    const itemIndex = getItemIndexFromElement(event.currentTarget);
+    toggleEditItem(itemIndex);
+    renderShoppingList();
+  });
+}
+//  > Container becomes editable
+//  > Submit new Text > Submit
+//  > Render List
+
+// User can press a toggle switch to show all items or show only items that are unchecked
+// > User click on "Toggle Button"
+// > List toggles between "All Items" & "Unchecked Items"
+// > Render List
+
+// User can type in a search term and get a filtered item list by title
+//  > User types in existing field and clicks "Filter Search"
+//  > STORE filters
+//  > Render List
+
+
+
 function handleShoppingList() {
   renderShoppingList();
   handleNewItemSubmit();

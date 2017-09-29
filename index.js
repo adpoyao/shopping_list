@@ -78,13 +78,24 @@ function handleItemCheckClicked() {
     renderShoppingList();
   });
 }
-  
+
+function deleteItemFromList(list) {
+    if()
+    //function > access STORE > match the index >> splicing
+}
+
   
 function handleDeleteItemClicked() {
   // Listen for when users want to delete an item and 
   // delete it
+  $('.js-shopping-list').on('click', '.js-item-delete', (event) => {
+    const itemIndex = getItemIndexFromElement(event.currentTarget);
+    //function > access STORE > match the index >>
+    //splicing
+  });
   console.log('`handleDeleteItemClicked` ran');
 }
+
   
 function handleShoppingList() {
   renderShoppingList();

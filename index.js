@@ -8,13 +8,12 @@ const STORE = [{name: 'apples', checked: false, editable: true},
 
 function generateItemElement(item, itemIndex, template) {
   return `
-      <li class="js-item-index-element" data-item-index="${itemIndex}">
-        <span class="shopping-item js-shopping-item ${item.checked ? 'shopping-item__checked' : ''}" contenteditable="${item.editable}">${item.name}</span>
+      <li class="js-item-index-element" data-item-index="${itemIndex}"> 
+      <span class="shopping-item js-shopping-item ${item.checked ? 'shopping-item__checked' : ''}" contenteditable="${item.editable}">${item.name}</span>
         <div class="shopping-item-controls">
           <button class="shopping-item-toggle js-item-toggle">
               <span class="button-label">check</span>
           </button>
-          <button class="shopping-hidden-toggle js-hidden-toggle">Toggle</button>
           <button class="shopping-item-delete js-item-delete">
               <span class="button-label">delete</span>
           </button>
@@ -125,11 +124,38 @@ function handleDeleteItemClicked() {
 // > List toggles between "All Items" & "Unchecked Items"
 // > Render List
 
+
+// $(document).ready(function() {
+//   renderShoppingList();
+//   $('#toggleCheckedItems').click(function() {
+//     $('.shopping-item__checked').toggle();
+//     console.log($(this).attr('id'));
+//   });
+
+
+//   $('.js-shopping-list').on('click', '.js-item-toggle', event => {
+//     console.log('`handleItemCheckClicked` ran');
+//     const itemIndex = getItemIndexFromElement(event.currentTarget);
+//     toggleCheckedForListItem(itemIndex);
+
+//   });
+
+// });
+
+
+
 // User can type in a search term and get a filtered item list by title
 //  > Create a new field on top for filter search
 //  > Another button to submit filter
 //  > .filter(?) between user input & current <li>
 //  > Render List
+
+/*
+* User can edit an item title
+* User can press a toggle switch to show all items or show only items that are unchecked
+* User can type in a search term and get a filtered item list by title
+*/
+
 
 function handleShoppingList() {
   renderShoppingList();
@@ -141,3 +167,6 @@ function handleShoppingList() {
   
 $(handleShoppingList);
   
+
+//https://codepen.io/dengeist/pen/zEdYaJ/?editors=1010
+//https://codepen.io/dengeist/pen/zEdYaJ/
